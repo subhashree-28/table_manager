@@ -1,0 +1,35 @@
+table {
+  width: 20%;
+  border: 1px solid;
+  margin: 20px 0;
+  margin-top: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+tr {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding:8px;
+  }
+
+th {
+  border: 1px solid;
+}
+
+.button {
+  border: 1px solid lightgrey;
+  width: 40%;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.details {
+  margin-right: 20px;
+}
+
+.log {
+  margin-right: 20px;
+}
+
+
