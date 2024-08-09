@@ -3,25 +3,40 @@ table {
   border: 1px solid;
   margin: 20px 0;
   margin-top: 50px;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
-tr {
-    border: 1px solid #dddddd;
-    text-align: center;
-    padding:8px;
-  }
-
+table,
+td,
 th {
   border: 1px solid;
 }
 
-.button {
-  border: 1px solid lightgrey;
+.header {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+tr {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 4px;
+}
+
+th {
+  border: 1px solid;
+  background-color: lightgoldenrodyellow;
+}
+
+.footer_button {
+  border: 1px solid black;
   width: 40%;
   padding: 10px;
   margin-left: 10px;
+}
+
+.radio_button {
+  text-align: center;
 }
 
 .details {
@@ -32,4 +47,51 @@ th {
   margin-right: 20px;
 }
 
+.name_textbox {
+  padding: 0px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
 
+.max_intake_textbox {
+  padding: 0px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.delete_button {
+  background-color: black;
+  color: white;
+  border-radius: 4px;
+}
+
+.delete_button:hover {
+  background-color: white;
+  color: black;
+}
+
+.add_button {
+  background-color: black;
+  color: white;
+  border-radius: 4px;
+}
+
+.link_textbox {
+  width: 90%;
+}
+
+.content_display {
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 746px;
+  align-items: right;
+}
+
+.footer {
+  margin-left: 10px;
+}
+
+.yes_button {
+  margin-right: 10px;
+}

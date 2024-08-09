@@ -5,83 +5,14 @@ import "./table_manger.css";
 import { initialState, items } from "./config";
 import Checklist from "./multiselect";
 import _ from "lodash";
-
-const reducer = produce((state: State, action: Action) => {
-  switch (action.type) {
-    case "set_input":
-      state.input = action.payload;
-      break;
-
-    case "set_completed":
-      state.data = _.map(state.data, (item, i) =>
-        i === action.payload ? { ...item, completed: !item.completed } : item
-      );
-      state.filteredItem = state.data.filter((item) => item.completed);
-      break;
-
-    case "add_item":
-      state.data.push(action.payload);
-      state.completed = false;
-      state.Name = "";
-      state.Description = "";
-      state.Link = "";
-      state.Should_Cook = "";
-      state.Nutritions = [];
-      state.Max_Intake_per_day = "";
-      break;
-
-    case "name":
-      state.Name = action.payload;
-      break;
-
-    case "description":
-      state.Description = action.payload;
-      break;
-
-    case "link":
-      state.Link = action.payload;
-      break;
-
-    case "should_cook":
-      state.Should_Cook = action.payload;
-      break;
-
-    case "nutritions":
-      state.Nutritions = action.payload;
-      break;
-
-    case "max_intake":
-      state.Max_Intake_per_day = action.payload;
-      break;
-
-    case "delete":
-      state.data = state.data.filter((item) => item.id !== action.payload);
-      break;
-
-    case "display_details":
-      state.display = !state.display;
-      break;
-
-    case "log":
-      state.log = !state.log;
-      state.filteredItem = state.data.filter((item) => item.completed);
-      console.log(state.filteredItem);
-      break;
-
-    case "deleted_item":
-      state.delete = !state.delete;
-      const delete_item = _.filter(state.data, (item) => !item.completed);
-      state.data = delete_item;
-      break;
-  }
-});
+import { reducer } from "./TableReducer";
 
 export default function TableManger() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const setInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: "set_input", payload: e.target.value });
-  };
+  // const setInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   dispatch({ type: "set_input", payload: e.target.value });
+  // };
 
   const handleCheck = (index: number) => {
     dispatch({ type: "set_completed", payload: index });
@@ -141,17 +72,25 @@ export default function TableManger() {
   };
 
   const handleLog = () => {
-    dispatch({ type: "log" });
-  };
-
+    dispatch({ type: "log" });          
+    
+};
   const handleDeleted = () => {
     dispatch({ type: "deleted_item" });
   };
 
+  const handleYes = () => {
+    dispatch({ type: "delete_if_yes" });
+  };
+
+  const handleNo = () => {
+    dispatch({type: "notdelete_if_no"})
+  }
+
   return (
     <div>
       <div className="table_manager">
-        <table>
+        <table className="header">
           <thead>
             <tr>
               <th> </th>
@@ -172,7 +111,7 @@ export default function TableManger() {
                   <input
                     type="checkbox"
                     checked={item.completed}
-                    onClick={() => handleCheck(index)}
+                    onChange={() => handleCheck(index)}
                   />
                 </td>
                 <td>{index + 1}</td>
@@ -185,17 +124,22 @@ export default function TableManger() {
                 <td>{item.Nutritions.join(",")}</td>
                 <td>{item.Max_Intake_per_day}</td>
                 <td>
-                  <button onClick={() => handleDelete(item.id)}>Delete</button>
+                  <button
+                    className="delete_button"
+                    onClick={() => handleDelete(item.id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
             <tr>
-              <td>
-                <input type="checkbox" />
-              </td>
+              <td>{/* <input type="checkbox" /> */}</td>
+
               <td>{state.data.length + 1}</td>
               <td>
                 <input
+                  className="name_textbox"
                   type="text"
                   name="Name"
                   onChange={handleName}
@@ -204,6 +148,7 @@ export default function TableManger() {
               </td>
               <td>
                 <input
+                  className="description"
                   type="text"
                   name="Description"
                   onChange={handleDescription}
@@ -211,30 +156,43 @@ export default function TableManger() {
                 />
               </td>
               <td>
-                <input type="text" onChange={handleLink} value={state.Link} />
+                <input
+                  className="link_textbox"
+                  type="text"
+                  onChange={handleLink}
+                  value={state.Link}
+                />
                 <a
                   href={`https://en.wikipedia.org/wiki/${state.Link}#Nutrition`}
-                ></a>
+                >
+                  {" "}
+                </a>
               </td>
               <td>
-                <input
-                  type="radio"
-                  name="should Cook Yes"
-                  value="Yes"
-                  checked={state.Should_Cook === "Yes"}
-                  onChange={handleShouldCook}
-                />
-                Yes
-                <input
-                  type="radio"
-                  name="should Cook No"
-                  value="No"
-                  checked={state.Should_Cook === "No"}
-                  onChange={handleShouldCook}
-                />
-                No
+                <div className="radio_button">
+                  <div>
+                    <input
+                      type="radio"
+                      name="should Cook Yes"
+                      value="Yes"
+                      checked={state.Should_Cook === "Yes"}
+                      onChange={handleShouldCook}
+                    />
+                    Yes
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      name="should Cook No"
+                      value="No"
+                      checked={state.Should_Cook === "No"}
+                      onChange={handleShouldCook}
+                    />
+                    No
+                  </div>
+                </div>
               </td>
-              <td>
+              <td className="nutrition">
                 <Checklist
                   items={items}
                   selectedValues={state.Nutritions}
@@ -243,6 +201,7 @@ export default function TableManger() {
               </td>
               <td>
                 <input
+                  className="max_intake_textbox"
                   type="text"
                   name="max intake"
                   onChange={handleMaxIntake}
@@ -258,29 +217,49 @@ export default function TableManger() {
           </tbody>
         </table>
         <div className="button">
-          <button className="details" onClick={handleDetails}>
-            Details
-          </button>
-          {state.display && (
-            <div>
-              {state.filteredItem.map((item) => (
-                <div key={item.id}>
-                  <p>Name: {item.Name}</p>
-                  <p>Description: {item.Description}</p>
-                  <p>Link: {item.Link}</p>
-                  <p>Should Cook: {item.Should_Cook}</p>
-                  <p>Nutritions: {item.Nutritions.join(",")}</p>
-                  <p>Max Intake per day: {item.Max_Intake_per_day}</p>
-                </div>
-              ))}
-            </div>
-          )}
-          <button className="log" onClick={handleLog}>
-            Log
-          </button>
-          <button className="delete" onClick={handleDeleted}>
-            Delete
-          </button>
+          <div className="footer_button">
+            <button className="details" onClick={handleDetails}>
+              Details
+            </button>
+            <button className="log" onClick={handleLog}>
+              Log
+            </button>
+            <button className="delete" onClick={handleDeleted}>
+              Delete
+            </button>
+          </div>
+          <div className="content">
+            {state.display && (
+              <div>
+                {state.filteredItem.length < 2 && state.filteredItem.map((item) => (
+                  <div key={item.id} className="content_display">
+                    <p>Id: {item.id}</p>
+                    <p>Name: {item.Name}</p>
+                    <p>Description: {item.Description}</p>
+                    <p>
+                      Link: <a href={state.Link}>{item.Link}</a>
+                    </p>
+                    <p>Should Cook: {item.Should_Cook}</p>
+                    <p>Nutritions: {item.Nutritions.join(",")}</p>
+                    <p>Max Intake per day: {item.Max_Intake_per_day}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          <div className="log">
+            
+          </div>
+
+          </div>
+          <div className="footer">
+            {state.delete && (
+              <div>
+                <p>Do you want to delete the selected item ?</p>
+                <button onClick={handleYes}>Yes</button>
+                <button onClick={handleNo}>No</button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

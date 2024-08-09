@@ -12,13 +12,15 @@ export interface Data {
 }
 
 export interface State {
+  set_yes: boolean;
+  set_no: boolean;
   log: boolean;
   delete: boolean;
   selectedItems: Data[];
   filteredItem: Data[];
   completed: boolean;
   display: boolean;
-  input: string;
+  // input: string;
   data: Data[];
   Name: string;
   Description: string;
@@ -30,7 +32,7 @@ export interface State {
 }
 
 export type Action =
-  | { type: "set_input"; payload: string }
+  // | { type: "set_input"; payload: string }
   | { type: "set_completed"; payload: number }
   | { type: "add_item"; payload: Data }
   | { type: "delete"; payload: number }
@@ -42,4 +44,6 @@ export type Action =
   | { type: "max_intake"; payload: string }
   | { type: "display_details" }
   | { type: "log" }
-  | { type: "deleted_item" };
+  | { type: "deleted_item" }
+  | { type: "delete_if_yes" }
+  | { type: "notdelete_if_no" }

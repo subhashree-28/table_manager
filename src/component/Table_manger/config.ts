@@ -1,7 +1,7 @@
 import { State } from "./types";
 
 export const initialState: State = {
-  input: "",
+  // input: "",
   data: [
     {
       id: 1,
@@ -27,12 +27,14 @@ export const initialState: State = {
   selectedItems: [],
   log: false,
   delete: false,
+  set_yes: false,
+  set_no: false,
 };
 
 export const items = [
-  { value: "vitamin A" },
-  { value: "vitamin B" },
-  { value: "vitamin C" },
-  { value: "vitamin D" },
-  { value: "vitamin E" },
+  {id:1, label: "Vitamin A", value: "vitamin A"},
+  {id:2, label: "Vitamin B", value: "vitamin B"},
+  {id:3, label: "Vitamin C", value: "vitamin C"},
+  {id:4, label: "Vitamin D", value: "vitamin D"},
+  {id:5, label: "Vitamin E", value: "vitamin E"}, 
 ];

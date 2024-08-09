@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./multiselect.css";
 import _ from "lodash";
 
 interface Props {
   items: {
+    id: number;
+    label: string,
     value: string;
   }[];
   selectedValues: string[];
@@ -13,41 +15,32 @@ interface Props {
 function Checklist(props: Props) {
   const { items, selectedValues, onChange } = props;
 
-  const [selectedItem, setSelectedItem] = useState<string[]>(selectedValues);
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
 
   const handleClick = (item: string) => {
-    setSelectedItem((prev) => {
-      const Selection = prev.includes(item)
-        ? prev.filter((i) => i !== item)
-        : [...prev, item];
-      onChange(Selection);
-      return Selection;
-    });
+    const updatedSelectedItems = _.includes(selectedValues, item)
+      ? selectedValues.filter((i) => i !== item)
+      : [...selectedValues, item];
+    onChange(updatedSelectedItems);
   };
 
-  const selectItem = selectedValues.join(", ");
-  const filteredItems = items.filter((item) =>
-    item.value.toLowerCase().includes(search.toLowerCase())
+  const filteredItems = _.filter(items, (item) =>
+    _.includes(item.value.toLowerCase(), search.toLowerCase())
   );
 
   const handleSelectAll = () => {
     if (selectedValues.length === items.length) {
       onChange([]);
     } else {
-      onChange(items.map((item) => item.value));
+      onChange(_.map(items, (item) => item.value));
     }
   };
 
   return (
     <div className="multiselectoption">
       <div className="show-options" onClick={() => setOpen(!open)}>
-        <input
-          type="text"
-          value={selectedValues}
-          className="selecting-options"
-        />
+        <div className="selecting-options">{selectedValues.join(", ")}</div>
       </div>
       {open && (
         <div className="select--item">
@@ -68,7 +61,7 @@ function Checklist(props: Props) {
             Select All
           </label>
           <br />
-          {filteredItems.map((item) => (
+          {_.map(filteredItems, (item) => (
             <label className="multiple--option" key={item.value}>
               <input
                 type="checkbox"
