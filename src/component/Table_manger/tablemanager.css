@@ -1,0 +1,176 @@
+table {
+  margin-left: 10px;
+  border: 1px solid;
+  margin: 20px 0;
+  margin-top: 50px;
+}
+
+table,
+td,
+th {
+  border: 1px solid;
+}
+
+.header {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+tr {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 4px;
+}
+
+th {
+  border: 1px solid;
+  background-color: lightgoldenrodyellow;
+}
+
+/* .footer_button {
+  border: 1px solid black;
+  width: 20%;
+  padding: 10px;
+  margin-left: 10px;
+  margin-top: 20px;
+} */
+
+.table_manager {
+  width: 90%;
+  margin-left: 10px;
+}
+
+.footer_button {
+  border: 1px solid;
+  height: 40px;
+  padding: 30px;
+  width: 357px;
+}
+
+.radio_button {
+  text-align: center;
+}
+
+.details {
+  background-color: black;
+  color: white;
+  margin-right: 20px;
+  border: 1px solid black;
+  height: 40px;
+  border-radius: 4px;
+  padding: 10px;
+  width: 70px;
+}
+
+.details:hover {
+  background-color: white;
+  color: black;
+}
+
+.log {
+  background-color: black;
+  color: white;
+  margin-right: 20px;
+  border: 1px solid black;
+  height: 40px;
+  border-radius: 4px;
+  padding: 10px;
+  width: 70px;
+}
+
+.log:hover {
+  background-color: white;
+  color: black;
+}
+
+.delete {
+  background-color: black;
+  color: white;
+  margin-right: 20px;
+  border: 1px solid black;
+  height: 40px;
+  border-radius: 4px;
+  padding: 10px;
+  width: 70px;
+}
+
+.delete:hover {
+  background-color: white;
+  color: black;
+}
+
+.add {
+  background-color: black;
+  color: white;
+  margin-right: 10px;
+  border: 1px solid black;
+  height: 40px;
+  border-radius: 4px;
+  padding: 10px;
+  width: 70px;
+}
+
+.add:hover {
+  background-color: white;
+  color: black;
+}
+
+.name_textbox {
+  padding: 0px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.max_intake_textbox {
+  padding: 0px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.delete_button {
+  background-color: black;
+  color: white;
+  border-radius: 4px;
+}
+
+.delete_button:hover {
+  background-color: white;
+  color: black;
+}
+
+.add_button {
+  background-color: black;
+  color: white;
+  border-radius: 4px;
+}
+
+.link_textbox {
+  width: 90%;
+}
+
+.content_display {
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-left: -1px;
+  margin-right: 746px;
+  align-items: right;
+}
+
+.footer {
+  margin-left: 10px;
+}
+
+.yes_button {
+  margin-right: 10px;
+}
+
+.no_button {
+  margin-left: 1px;
+}
+
+.form {
+  border: 1px solid;
+  margin-top: 20px;
+  width: 278px;
+}

@@ -1,8 +1,7 @@
 import React, { useReducer } from "react";
-import produce from "immer";
-import { Action, Data, State } from "./types";
+import { Data } from "./types";
 import "./table_manger.css";
-import { initialState, items } from "./config";
+import { headers, initialState, items } from "./config";
 import Checklist from "./multiselect";
 import _ from "lodash";
 import { reducer } from "./TableReducer";
@@ -25,12 +24,12 @@ export default function TableManger() {
   const handleAdd = () => {
     const newItem: Data = {
       id: state.data.length + 1,
-      Name: state.Name,
-      Description: state.Description,
-      Link: state.Link,
-      Should_Cook: state.Should_Cook,
-      Nutritions: state.Nutritions,
-      Max_Intake_per_day: state.Max_Intake_per_day,
+      name: state.name,
+      description: state.description,
+      link: state.link,
+      should_cook: state.should_cook,
+      nutritions: state.nutritions,
+      max_intake: state.max_intake,
       completed: false,
     };
 
@@ -40,6 +39,16 @@ export default function TableManger() {
     });
   };
 
+  // const handle = ["name", "description", "link", "should cook", "max_intake"];
+
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   handle.forEach((type) => {
+  //     if (e.target.name === type) {
+  //       dispatch({ type: { type }, payload: e.target.value });
+  //     }
+  //   });
+  // };
+  
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: "name", payload: e.target.value });
   };
@@ -56,6 +65,10 @@ export default function TableManger() {
     dispatch({ type: "should_cook", payload: e.target.value });
   };
 
+  const handleMaxIntake = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: "max_intake", payload: e.target.value });
+  };
+
   // const handleNutrition = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   dispatch({ type: "nutritions", payload: e.target.value });
   // };
@@ -63,18 +76,13 @@ export default function TableManger() {
     dispatch({ type: "nutritions", payload: selectedValues });
   };
 
-  const handleMaxIntake = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: "max_intake", payload: e.target.value });
-  };
-
   const handleDetails = () => {
     dispatch({ type: "display_details" });
   };
 
   const handleLog = () => {
-    dispatch({ type: "log" });          
-    
-};
+    dispatch({ type: "log" });
+  };
   const handleDeleted = () => {
     dispatch({ type: "deleted_item" });
   };
@@ -84,8 +92,8 @@ export default function TableManger() {
   };
 
   const handleNo = () => {
-    dispatch({type: "notdelete_if_no"})
-  }
+    dispatch({ type: "notdelete_if_no" });
+  };
 
   return (
     <div>
@@ -93,19 +101,13 @@ export default function TableManger() {
         <table className="header">
           <thead>
             <tr>
-              <th> </th>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Link</th>
-              <th>Should Cook</th>
-              <th>Nutritions</th>
-              <th>Max. Intake per day</th>
-              <th>Actions</th>
+              {_.map(headers, (header, index) => (
+                <th key={index}>{header}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            {state.data.map((item, index) => (
+            {_.map(state.data, (item, index) => (
               <tr key={index}>
                 <td>
                   <input
@@ -115,14 +117,14 @@ export default function TableManger() {
                   />
                 </td>
                 <td>{index + 1}</td>
-                <td>{item.Name}</td>
-                <td>{item.Description}</td>
+                <td>{item.name}</td>
+                <td>{item.description}</td>
                 <td>
-                  <a href={item.Link}>{item.Link}</a>
+                  <a href={item.link}>{item.link}</a>
                 </td>
-                <td>{item.Should_Cook}</td>
-                <td>{item.Nutritions.join(",")}</td>
-                <td>{item.Max_Intake_per_day}</td>
+                <td>{item.should_cook}</td>
+                <td>{item.nutritions.join(",")}</td>
+                <td>{item.max_intake}</td>
                 <td>
                   <button
                     className="delete_button"
@@ -141,18 +143,18 @@ export default function TableManger() {
                 <input
                   className="name_textbox"
                   type="text"
-                  name="Name"
+                  name="name"
                   onChange={handleName}
-                  value={state.Name}
+                  value={state.name}
                 />
               </td>
               <td>
                 <input
                   className="description"
                   type="text"
-                  name="Description"
+                  name="description"
                   onChange={handleDescription}
-                  value={state.Description}
+                  value={state.description}
                 />
               </td>
               <td>
@@ -160,12 +162,12 @@ export default function TableManger() {
                   className="link_textbox"
                   type="text"
                   onChange={handleLink}
-                  value={state.Link}
+                  value={state.link}
                 />
                 <a
-                  href={`https://en.wikipedia.org/wiki/${state.Link}#Nutrition`}
+                  href={`https://en.wikipedia.org/wiki/${state.link}#Nutrition`}
                 >
-                  {" "}
+                  `https://en.wikipedia.org/wiki/${state.name}#Nutrition`
                 </a>
               </td>
               <td>
@@ -175,7 +177,7 @@ export default function TableManger() {
                       type="radio"
                       name="should Cook Yes"
                       value="Yes"
-                      checked={state.Should_Cook === "Yes"}
+                      checked={state.should_cook === "Yes"}
                       onChange={handleShouldCook}
                     />
                     Yes
@@ -185,34 +187,34 @@ export default function TableManger() {
                       type="radio"
                       name="should Cook No"
                       value="No"
-                      checked={state.Should_Cook === "No"}
+                      checked={state.should_cook === "No"}
                       onChange={handleShouldCook}
                     />
                     No
                   </div>
                 </div>
               </td>
-              <td className="nutrition">
+              {/* <td className="nutrition">
                 <Checklist
                   items={items}
-                  selectedValues={state.Nutritions}
+                  selectedValues={state.nutritions}
                   onChange={handleNutritions}
                 />
-              </td>
+              </td> */}
               <td>
                 <input
                   className="max_intake_textbox"
                   type="text"
                   name="max intake"
                   onChange={handleMaxIntake}
-                  value={state.Max_Intake_per_day}
+                  value={state.max_intake}
                 />
               </td>
-              <td>
+              {/* <td>
                 <button className="add_button" onClick={handleAdd}>
                   Add
                 </button>
-              </td>
+              </td> */}
             </tr>
           </tbody>
         </table>
@@ -231,25 +233,23 @@ export default function TableManger() {
           <div className="content">
             {state.display && (
               <div>
-                {state.filteredItem.length < 2 && state.filteredItem.map((item) => (
-                  <div key={item.id} className="content_display">
-                    <p>Id: {item.id}</p>
-                    <p>Name: {item.Name}</p>
-                    <p>Description: {item.Description}</p>
-                    <p>
-                      Link: <a href={state.Link}>{item.Link}</a>
-                    </p>
-                    <p>Should Cook: {item.Should_Cook}</p>
-                    <p>Nutritions: {item.Nutritions.join(",")}</p>
-                    <p>Max Intake per day: {item.Max_Intake_per_day}</p>
-                  </div>
-                ))}
+                {state.filteredItem.length < 2 &&
+                  _.map(state.filteredItem, (item) => (
+                    <div key={item.id} className="content_display">
+                      <p>Id: {item.id}</p>
+                      <p>name: {item.name}</p>
+                      <p>description: {item.description}</p>
+                      <p>
+                        link: <a href={state.link}>{item.link}</a>
+                      </p>
+                      <p>Should Cook: {item.should_cook}</p>
+                      <p>Nutritions: {item.nutritions.join(",")}</p>
+                      <p>Max Intake per day: {item.max_intake}</p>
+                    </div>
+                  ))}
               </div>
             )}
-          <div className="log">
-            
-          </div>
-
+            <div className="log"></div>
           </div>
           <div className="footer">
             {state.delete && (

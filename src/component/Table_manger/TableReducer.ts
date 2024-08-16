@@ -16,38 +16,39 @@ export const reducer = produce((state: State, action: Action) => {
       break;
 
     case "add_item":
-      state.data.push(action.payload);
-      state.completed = false;
-      state.Name = "";
-      state.Description = "";
-      state.Link = "";
-      state.Should_Cook = "";
-      state.Nutritions = [];
-      state.Max_Intake_per_day = "";
+      state.data = [...state.data, action.payload];
+      // state.data.push(action.payload);
+      // state.completed = false;
+      // state.name = "";
+      // state.description = "";
+      // state.link = "";
+      // state.should_cook = "";
+      // state.Nutritions = [];
+      // state.max_intake = "";
       break;
 
     case "name":
-      state.Name = action.payload;
+      state.name = action.payload;
       break;
 
     case "description":
-      state.Description = action.payload;
+      state.description = action.payload;
       break;
 
     case "link":
-      state.Link = action.payload;
+      state.link = action.payload;
       break;
 
     case "should_cook":
-      state.Should_Cook = action.payload;
+      state.should_cook = action.payload;
       break;
 
     case "nutritions":
-      state.Nutritions = action.payload;
+      state.nutritions = action.payload;
       break;
 
     case "max_intake":
-      state.Max_Intake_per_day = action.payload;
+      state.max_intake = action.payload;
       break;
 
     case "delete":
@@ -58,6 +59,7 @@ export const reducer = produce((state: State, action: Action) => {
       state.display = !state.display;
       state.log = false;
       state.delete = false;
+      state.add = false;
       break;
 
     case "log":
@@ -66,12 +68,21 @@ export const reducer = produce((state: State, action: Action) => {
       console.log(state.filteredItem);
       state.display = false;
       state.delete = false;
+      state.add = false;
+      break;
+
+    case "add":
+      state.add = !state.add;
+      state.display = false;
+      state.log = false;
+      state.delete = false;
       break;
 
     case "deleted_item":
       state.delete = !state.delete;
       state.display = false;
       state.log = false;
+      state.add = false;
       break;
 
     case "delete_if_yes":
