@@ -1,0 +1,33 @@
+form {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.form_add {
+  margin-top: 10px;
+}
+
+.should_cook {
+  margin-top: 10px;
+}
+
+.name {
+  margin-bottom: 10px;
+}
+
+.description {
+  margin-bottom: 10px;
+}
+
+.intake {
+  margin-top: 10px;
+}
+
+.nutrition {
+  margin-top: 10px;
+}
+
+.error_message {
+  font-size: 12px;
+  color: red;
+}

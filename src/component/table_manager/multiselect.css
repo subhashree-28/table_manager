@@ -1,0 +1,14 @@
+.options--list {
+  border: 1px solid;
+  margin-top: 5px;
+  width: 183px;
+  border-radius: 2px;
+  background-color: white;
+  position: absolute;
+}
+
+.searchbar {
+  width: 100px;
+  margin-left: 5px;
+  margin-top: 6px;
+}

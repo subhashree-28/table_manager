@@ -1,13 +1,15 @@
-import React from 'react';
-import TableManger from './component/Table_manger/Table_manger';
-import Checklist from './component/Table_manger/multiselect';
-import { items } from './component/Table_manger/config';
+import React from "react";
+import TableManager from "./component/table_manager/TableManagerForm";
+import TableManagerProvider, {
+  TableManagerContext,
+} from "./component/table_manager/TableManagerProvider";
 
 function App() {
   return (
     <div className="App">
-      <TableManger />
-     
+      <TableManagerProvider>
+        <TableManager />
+      </TableManagerProvider>
     </div>
   );
 }
