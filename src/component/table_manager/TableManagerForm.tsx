@@ -3,9 +3,11 @@ import { headers } from "./config";
 import _ from "lodash";
 import Form from "./Form";
 import { useTableManagerContext } from "./TableManagerProvider";
+import { Data } from "./types";
 
 function Table() {
-  const { data, handleCheck, handleDelete } = useTableManagerContext();
+  const { new_data, checkedId, setSelectRow, setDeleteRow } =
+    useTableManagerContext();
 
   return (
     <div>
@@ -18,16 +20,16 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {_.map(data.data, (item, index) => (
+          {_.map(new_data, (item, index) => (
             <tr key={index}>
               <td>
                 <input
                   type="checkbox"
-                  checked={item.completed}
-                  onChange={() => handleCheck(index)}
+                  checked={_.includes(checkedId, item.id)}
+                  onChange={() => setSelectRow(item.id)}
                 />
               </td>
-              <td>{index + 1}</td>
+              <td>{item.id}</td>
               <td>{item.name}</td>
               <td>{item.description}</td>
               <td>
@@ -39,7 +41,7 @@ function Table() {
               <td>
                 <button
                   className="delete_button"
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => setDeleteRow(item.id)}
                 >
                   Delete
                 </button>
@@ -52,45 +54,57 @@ function Table() {
   );
 }
 
-function Button() {
+function TableControl() {
   const {
-    data,
-    handleDetails,
-    handleLog,
-    handleAdd,
-    handleDeleted,
-    handleNo,
-    handleYes,
-    handleAddItem,
+    new_data,
+    checkedId,
+    table_tab,
+    setTableAction,
+    setSelect,
+    setAddData,
   } = useTableManagerContext();
 
+  const filteredData = _.filter(new_data, (data) =>
+    _.includes(checkedId, data.id)
+  );
+
+  function AddItem(data: Data) {
+    setAddData(data);
+  }
+
+  if (table_tab === "log") {
+    console.log(filteredData);
+  }
   return (
     <div className="button">
-      <div className="footer_button">
-        <button className="details" onClick={handleDetails}>
+      <div className="table_tab">
+        <button className="details" onClick={() => setTableAction("display")}>
           Details
         </button>
-        <button className="log" onClick={handleLog}>
+        <button className="log" onClick={() => setTableAction("log")}>
           Log
         </button>
-        <button className="delete" onClick={handleDeleted}>
+        <button
+          className="delete"
+          onClick={() => setTableAction("remove_data")}
+        >
           Delete
         </button>
-        <button className="add" onClick={handleAdd}>
+        <button className="add" onClick={() => setTableAction("add")}>
           Add
         </button>
       </div>
       <div className="content">
-        {data.display && (
+        {table_tab === "display" && (
           <div>
-            {data.filteredItem.length < 2 &&
-              _.map(data.filteredItem, (item) => (
+            {_.size(filteredData) < 2 &&
+              _.map(filteredData, (item) => (
                 <div key={item.id} className="content_display">
                   <p>Id: {item.id}</p>
-                  <p>name: {item.name}</p>
-                  <p>description: {item.description}</p>
+                  <p>Name: {item.name}</p>
+                  <p>Description: {item.description}</p>
                   <p>
-                    link: <a href={data.link}>{item.link}</a>
+                    Link: <a href={item.link}>{item.link}</a>
                   </p>
                   <p>Should Cook: {item.should_cook}</p>
                   <p>Nutritions: {item.nutritions.join(",")}</p>
@@ -100,24 +114,24 @@ function Button() {
           </div>
         )}
       </div>
-      
+
       <div className="footer">
-        {data.delete && (
+        {_.size(filteredData) >= 1 && table_tab === "remove_data" && (
           <div>
             <p>Do you want to delete the selected item ?</p>
-            <button onClick={handleYes} className="yes_button">
+            <button onClick={() => setSelect(true)} className="yes_button">
               Yes
             </button>
-            <button onClick={handleNo} className="no_button">
+            <button onClick={() => setSelect(false)} className="no_button">
               No
             </button>
           </div>
         )}
       </div>
       <div>
-        {data.add && (
+        {table_tab === "add" && (
           <div className="form">
-            <Form onSubmitData={handleAddItem} />
+            <Form onSubmitData={AddItem} />
           </div>
         )}
       </div>
@@ -130,7 +144,7 @@ export default function TableManager() {
     <div>
       <div className="table_manager">
         <Table />
-        <Button />
+        <TableControl />
       </div>
     </div>
   );

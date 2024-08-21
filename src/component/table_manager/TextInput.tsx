@@ -36,37 +36,3 @@ export function TextInput(props: TextInputProps) {
   );
 }
 
-// type RadioInputProps = ComponentProps<"input"> & {
-//   control: Control<any>;
-//   name: string;
-// };
-
-// export function RadioInput({ control, name, ...inputProps }: RadioInputProps) {
-//   // const {formState: {errors}} = useController({control, name})
-
-//   return (
-//     <div>
-//       <div className="should_cook">
-//         Should Cook:
-//         <label>
-//           <input
-//             type="radio"
-//             value="yes"
-//             {...control.register(name)}
-//             placeholder="should_cook"
-//           />
-//           Yes
-//         </label>
-//         <label>
-//           <input
-//             type="radio"
-//             value="no"
-//             {...control.register(name)}
-//             placeholder="should_cook"
-//           />
-//           No
-//         </label>
-//       </div>
-//     </div>
-//   );
-// }

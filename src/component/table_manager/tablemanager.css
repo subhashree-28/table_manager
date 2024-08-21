@@ -1,7 +1,7 @@
 table {
-  margin-left: 10px;
+  margin-left: 20px;
   border: 1px solid;
-  margin: 20px 0;
+  margin: 30px 0;
   margin-top: 50px;
 }
 
@@ -20,28 +20,21 @@ th {
 tr {
   border: 1px solid #dddddd;
   text-align: center;
-  padding: 4px;
+  padding: 10px;
 }
 
 th {
   border: 1px solid;
   background-color: lightgoldenrodyellow;
-}
-
-/* .footer_button {
-  border: 1px solid black;
-  width: 20%;
   padding: 10px;
-  margin-left: 10px;
-  margin-top: 20px;
-} */
+}
 
 .table_manager {
   width: 90%;
   margin-left: 10px;
 }
 
-.footer_button {
+.table_tab {
   border: 1px solid;
   height: 40px;
   padding: 30px;

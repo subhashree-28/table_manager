@@ -40,7 +40,7 @@ function Checklist(props: Props) {
       onChange(item);
     } else if (type === "checkbox") {
       const updatedSelectedItems = _.includes(selectedValues, item)
-        ? selectedValues.filter((i) => i !== item)
+        ? _.filter(selectedValues, (i) => i !== item)
         : [...selectedValues, item];
       onChange(updatedSelectedItems);
     }
@@ -49,14 +49,6 @@ function Checklist(props: Props) {
   const filteredItems = _.filter(items, (item) =>
     _.includes(item.label.toLowerCase(), search.toLowerCase())
   );
-
-  // const handleSelectAll = () => {
-  //   if (selectedValues.length === items.length) {
-  //     onChange([]);
-  //   } else {
-  //     onChange(_.map(items, (item) => item.label));
-  //   }
-  // };
 
   const {
     formState: { errors },
@@ -70,7 +62,7 @@ function Checklist(props: Props) {
         className="selected-options"
         placeholder={placeholder}
         onClick={() => setOpen(!open)}
-        value={type === "radio" ? selectedValue : selectedValues.join(", ")}
+        value={type === "radio" ? selectedValue : _.join(selectedValues, ", ")}
         {...control.register(name, {
           required: required && `${name} is required`,
         })}
@@ -87,15 +79,6 @@ function Checklist(props: Props) {
             className="searchbar"
           />
           <br />
-          {/* <label>
-            <input
-              type="checkbox"
-              checked={selectedValues.length === items.length}
-              onChange={handleSelectAll}
-            />
-            Select All
-          </label>
-          <br /> */}
           {_.map(filteredItems, (item) => (
             <label className="option" key={item.label}>
               <input
@@ -103,7 +86,7 @@ function Checklist(props: Props) {
                 checked={
                   type === "radio"
                     ? selectedValue === item.label
-                    : selectedValues.includes(item.label)
+                    : _.includes(selectedValues, item.label)
                 }
                 onChange={() => handleClick(item.label)}
               />

@@ -1,8 +1,8 @@
 import React from "react";
-import TableManager from "./component/Table_manger/TableManagerForm";
+import TableManager from "./component/table_manager/TableManagerForm";
 import TableManagerProvider, {
   TableManagerContext,
-} from "./component/Table_manger/TableManagerProvider";
+} from "./component/table_manager/TableManagerProvider";
 
 function App() {
   return (

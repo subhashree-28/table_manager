@@ -13,7 +13,6 @@ export const headers = [
 ];
 
 export const initialState: State = {
-  // input: "",
   data: [
     {
       id: 1,
@@ -23,25 +22,21 @@ export const initialState: State = {
       should_cook: "Yes",
       nutritions: ["Vitamin C, Vitamin D, Vitamin B6"],
       max_intake: "250g",
-      completed: false,
     },
   ],
-  name: "",
-  description: "",
-  link: "",
-  should_cook: "",
-  nutritions: [],
-  max_intake: "",
-  selectedNutrition: [],
-  display: false,
-  completed: false,
-  filteredItem: [],
-  selectedItems: [],
-  log: false,
-  delete: false,
-  set_yes: false,
-  set_no: false,
-  add: false,
+  checkedId: [],
+  table_tab: "none",
+  new_data: [
+    {
+      id: 1,
+      name: "Potato",
+      description: "It is healthy and highly carbohydrated",
+      link: "https://en.wikipedia.org/wiki/potato#Nutrition",
+      should_cook: "Yes",
+      nutritions: ["Vitamin C, Vitamin D, Vitamin B6"],
+      max_intake: "250g",
+    },
+  ],
 };
 
 export const items = [
@@ -52,7 +47,14 @@ export const items = [
   { id: 5, label: "Vitamin E", value: "vitamin-e" },
 ];
 
-export const item = [
+export const option = [
   { id: 1, label: "Yes", value: "yes" },
-  { id: 2, label: "No", value: "no" }
+  { id: 2, label: "No", value: "no" },
 ];
+
+export const patterns = {
+  name: /^[A-Z][a-z]*.*$/,
+  description: /^[A-Z][a-z]*.*$/,
+  link: /\b(?:https?|ftp):\/\/(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})(?:\/[^\s]*)?\b/,
+  max_intake: /^[0-9]+[g]+$/,
+};
